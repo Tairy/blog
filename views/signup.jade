@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  if locals.user
+    div.alert.alert-danger 你已登录,请
+      a(href="javascript:void(0);")#logout 退出
+      |后再注册！
+  else
+    h1.welcome WELCOME
+    form(id="login-form", action="/signup", method="post", role="form").form-group
+      if locals.success
+        div.alert.alert-success #{locals.success}
+      if locals.error
+        div.alert.alert-danger #{locals.error}
+      div.form-group
+        label Email address:
+        input#email.form-control(type="email", name="email", placeholder="Email" value="")
+      div.form-group
+        label Username:
+        input#username.form-control(type="text", name="username" placeholder="Username" value="")
+      div.form-group
+        label Password:
+        input#password.form-control(type="password", name="password", placeholder="Password" value="")
+      div.form-group
+        label Confirm Password:
+        input#conpassword.form-control(type="password", name="conpassword", placeholder="Confirm Password" value="")
+      button(type="submit").btn.btn-success.submit-btn Submit

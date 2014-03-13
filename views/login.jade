@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  if locals.user
+    div.alert.alert-danger 你已登录！
+  else
+    h1.welcome WELCOME
+    form(id="login-form", action="/login", method="post", role="form").form-group
+      if locals.success
+        div.alert.alert-success #{locals.success}
+      if locals.error
+        div.alert.alert-warning #{locals.error}
+      div.form-group
+        label Email address:
+        input#email.form-control(type="email", name="email", placeholder="Email" value="")
+      div.form-group
+        label Password:
+        input#password.form-control(type="password", name="password", placeholder="Password" value="")
+      div.checkbox
+        label Remember Me
+          input(type="checkbox", name="remember", value="")
+      button(type="submit").btn.btn-success.submit-btn Login

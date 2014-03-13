@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  div.blog
+    div.article
+      each post, i in posts
+        h3
+          a(href="/detail/#{post.timestamp}",data-toggle="popover", data-placement="left",data-original-title="#{post.time.day}",data-trigger="hover").title= post.title
+        hr

@@ -1,0 +1,9 @@
+div.blog
+  div.article
+    each post, i in posts
+      h1
+        a(href="/blog/detail/#{post.timestamp}")= post.title
+      hr
+      != md(post.post)
+      if i < posts.length - 1
+        hr.separated

@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  if !locals.user 
+    div.alert.alert-danger 
+      a(href="/login") 登录
+      |后才能编辑文章
+  else
+    each post in posts
+      form(id="post_form" action="/edit/#{post.timestamp}", method="post", role="form")
+        if locals.success
+          div.alert.alert-success #{locals.success}
+        if locals.error
+          div.alert.alert-danger #{locals.error}
+
+        label 文章标题:
+        input(type="text", placeholder="文章标题", name="title", value="#{post.title}").form-control
+        br
+        label 文章内容:
+        textarea(rows="12", placeholder="文章内容", name="post").form-control #{post.post}
+        br
+        button(type="submit").btn.btn-success 更新文章

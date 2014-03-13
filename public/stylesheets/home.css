@@ -1,0 +1,78 @@
+body{
+	font-size: 16px;
+	line-height: 28px;
+	padding: 0px 20px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #454441;
+}
+
+.navbar{
+	border-top:3px solid rgb(122, 250, 163);
+	border-bottom: 1px dashed rgb(122, 250, 163);
+}
+
+.navbar a{
+	color: rgb(79, 177, 111);
+}
+
+.tairy-logo{
+	display: inline-block;
+	margin:0 auto;
+	border-radius: 10px;
+}
+
+.tairy-logo:hover{
+    -webkit-box-shadow: 0 0 20px rgb(228, 255, 232);
+    box-shadow: 0 0 50px rgb(228, 255, 232);
+}
+
+.tairy-avatar{
+	border-radius: 10px;
+}
+
+
+
+/* Avatar and tagline */
+.masthead {
+	text-align: center;
+}
+.masthead h1{
+	margin-top: 30px;
+}
+.masthead h1 > a{
+	color:rgb(29, 207, 86);
+	-webkit-transition: 0.50s;
+	transition: 0.50s;
+	-webkit-backface-visibility: hidden;
+	text-decoration: none;
+}
+.masthead h1 > a :hover{
+	color: rgb(29, 189, 80);
+}
+
+.masthead p{
+	color: rgb(187, 187, 187);
+}
+
+#scrollUp {
+	bottom: 20px;
+	right: 20px;
+	height: 38px;
+	width: 38px;
+	background: url("../images/top.png") no-repeat;
+}
+
+footer p{
+	color: rgb(187, 187, 187);
+	font-size: 15px;
+}
+footer a{
+	color: rgb(187, 187, 187);
+	font-size: 15px;
+	-webkit-backface-visibility: hidden;
+	text-decoration: none;
+}
+footer a:hover{
+	text-decoration: none;
+	color: rgb(29, 156, 33);
+}
