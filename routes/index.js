@@ -89,8 +89,8 @@ module.exports = function(app){
     res.render('about', { title: "Tairy's Blog-About" });
   });
 
-  app.get('/tag',function(req,res){
-    res.render('tag', { title: "Tairy's Blog-Tag" });
+  app.get('/comment',function(req,res){
+    res.render('comment', { title: "Tairy's Blog-Comment" });
   });
 
   app.get('/post',function(req,res){
