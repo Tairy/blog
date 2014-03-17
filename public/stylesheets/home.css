@@ -30,6 +30,10 @@ body{
 	border-radius: 10px;
 }
 
+.navbar-toggle .icon-bar {
+	background-color: rgb(103, 218, 126);
+}
+
 
 
 /* Avatar and tagline */
