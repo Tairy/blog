@@ -21,4 +21,4 @@
 - 评论功能
 
 基本上实现了一个完整可用的博客。
-  [1]: blog.tairy.me
+  [1]: http://blog.tairy.me
