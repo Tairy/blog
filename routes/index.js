@@ -76,14 +76,14 @@ module.exports = function(app){
     });
   });
 
-  app.get('/signup',function(req,res){
-    res.render('signup', { 
-      title: "Tairy's Blog-Signup",
-      user: req.session.user,
-      success: req.flash('success').toString(),
-      error: req.flash('error').toString()
-    });
-  });
+  // app.get('/signup',function(req,res){
+  //   res.render('signup', { 
+  //     title: "Tairy's Blog-Signup",
+  //     user: req.session.user,
+  //     success: req.flash('success').toString(),
+  //     error: req.flash('error').toString()
+  //   });
+  // });
 
   app.get('/about',function(req,res){
     res.render('about', { title: "Tairy's Blog-About" });
@@ -158,44 +158,44 @@ module.exports = function(app){
     });
   });
 
-  app.post('/signup',function(req,res){
-    var name = req.body.username,
-        password = req.body.password,
-        conpassword = req.body['conpassword'];
-    if(conpassword != password){
-      req.flash('error', '两次输入的密码不一致!')
-      return res.redirect('/signup')
-    }
+  // app.post('/signup',function(req,res){
+  //   var name = req.body.username,
+  //       password = req.body.password,
+  //       conpassword = req.body['conpassword'];
+  //   if(conpassword != password){
+  //     req.flash('error', '两次输入的密码不一致!')
+  //     return res.redirect('/signup')
+  //   }
 
-    var md5 = crypto.createHash('md5'),
-        password = md5.update(req.body.password).digest('hex');
+  //   var md5 = crypto.createHash('md5'),
+  //       password = md5.update(req.body.password).digest('hex');
 
-    var newUser = new User({
-      name : req.body.username,
-      password : password,
-      email : req.body.email
-    });
+  //   var newUser = new User({
+  //     name : req.body.username,
+  //     password : password,
+  //     email : req.body.email
+  //   });
 
-    User.get(newUser.email, function(err, user){
-      if(user){
-        err = '用户已存在!';
-      }
+  //   User.get(newUser.email, function(err, user){
+  //     if(user){
+  //       err = '用户已存在!';
+  //     }
 
-      if(err){
-        req.flash('error', err);
-        return res.redirect('/signup');
-      }
+  //     if(err){
+  //       req.flash('error', err);
+  //       return res.redirect('/signup');
+  //     }
 
-      newUser.save(function(err){
-        if(err){
-          req.flash('error', err);
-          return res.redirect('/signup');
-        }
+  //     newUser.save(function(err){
+  //       if(err){
+  //         req.flash('error', err);
+  //         return res.redirect('/signup');
+  //       }
 
-        req.session.user = newUser;
-        req.flash('success', '注册成功!');
-        res.redirect('/');
-      });
-    });
-  });
+  //       req.session.user = newUser;
+  //       req.flash('success', '注册成功!');
+  //       res.redirect('/');
+  //     });
+  //   });
+  // });
 };
