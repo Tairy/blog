@@ -6,6 +6,7 @@
 var crypto = require('crypto'),
 User = require('../models/user.js');
 Post = require('../models/post.js');
+Category = require('../models/category.js')
 
 var md = require('marked');
 
@@ -27,14 +28,53 @@ module.exports = function(app){
   });
 
   app.get('/contents',function(req,res){
-    Post.get(null, function(err, posts){
+    Category.get(null, function(err, categorys){
       if(err){
-        posts = [];
+        categorys= [];
       }
       res.render('contents', { 
         title: "Tairy's Blog-Contents",
-        posts: posts,
+        categorys: categorys
       });
+    });
+  });
+
+  app.get('/category',function(req,res){
+    res.render('category', { 
+      title: "Tairy's Blog-Category",
+      user: req.session.user,
+      success: req.flash('success').toString(),
+      error: req.flash('error').toString()
+    });
+  });
+
+  app.get('/editcategory/:aliase',function(req,res){
+    var aliase = req.params.aliase;
+    Category.get(aliase,function(err,categorys){
+      if(err){
+        category = [];
+      }
+
+      res.render('editcategory', { 
+      title: "Tairy's Blog-EditCategory",
+      user: req.session.user,
+      categorys: categorys,
+      success: req.flash('success').toString(),
+      error: req.flash('error').toString()
+      });
+    });
+  });
+
+  app.post('/editcategory/:aliase',function(req,res){
+    var category = new Category(req.body.name, req.body.aliase, req.body.color);
+    var aliase = req.params.aliase;
+    category.update(aliase,function(err){
+      if(err){
+        req.flash('error', err);
+        return res.redirect('/');
+      }
+      req.flash('success', '更新成功!');
+      res.redirect('/contents');
     });
   });
 
@@ -131,7 +171,7 @@ module.exports = function(app){
 
   app.post('/post',function(req,res){
     var currentUser = req.session.user,
-        post = new Post(currentUser.name, req.body.title, req.body.post);
+        post = new Post(currentUser.name, req.body.title, req.body.category,req.body.categoryaliase ,req.body.post);
 
     post.save(function(err){
       if(err){
@@ -146,7 +186,7 @@ module.exports = function(app){
   app.post('/edit/:id',function(req,res){
     var currentUser = req.session.user;
     var timestamp = req.params.id;
-    var post = new Post(currentUser.name, req.body.title, req.body.post);
+    var post = new Post(currentUser.name, req.body.title, req.body.category, req.body.post);
 
     post.update(timestamp,function(err){
       if(err){
@@ -158,13 +198,36 @@ module.exports = function(app){
     });
   });
 
+  app.post('/category',function(req,res){
+    var name = req.body.name,
+        aliase = req.body.aliase,
+        color = req.body.color;
+
+    if(name == "" || color == ""){
+      req.flash('error','名称和背景色不能为空!');
+      return res.redirect('/category');
+    }
+
+    var newCategory = new Category(name, aliase, color);
+
+    newCategory.save(function(err){
+      if(err){
+        req.flash('error',err);
+        res.redirect('/catrgory');
+      }
+
+      req.flash('success', '添加成功!');
+      res.redirect('/contents');
+    });
+  });
+
   // app.post('/signup',function(req,res){
   //   var name = req.body.username,
   //       password = req.body.password,
   //       conpassword = req.body['conpassword'];
   //   if(conpassword != password){
-  //     req.flash('error', '两次输入的密码不一致!')
-  //     return res.redirect('/signup')
+  //     req.flash('error', '两次输入的密码不一致!');
+  //     return res.redirect('/signup');
   //   }
 
   //   var md5 = crypto.createHash('md5'),

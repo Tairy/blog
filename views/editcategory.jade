@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  if !locals.user 
+    div.alert.alert-danger 
+      a(href="/login") 登录
+      |后才能修改分类
+  else
+    each category in categorys
+      form(id="post_form" action="/editcategory/#{category.aliase}", method="post", role="form")
+       if locals.success
+         div.alert.alert-success #{locals.success}
+       if locals.error
+         div.alert.alert-danger #{locals.error}
+       label 分类名称:
+       input(type="text", placeholder="分类名称", name="name", value="#{category.name}").form-control
+       br
+       label 分类别名:
+       input(type="text", placeholder="分类别名", name="aliase",value="#{category.aliase}").form-control
+       br
+       label 分类背景色:
+       textarea(rows="10", placeholder="分类背景色", name="color").form-control #{category.color}
+       br
+       button(type="submit").btn.btn-success 提交分类

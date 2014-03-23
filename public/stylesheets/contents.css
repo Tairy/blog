@@ -31,12 +31,9 @@
 .showcase-name-text{
 
 }
-.showcase-info-6{
+.showcase-info{
 	background: rgba(0,0,0,0.6);
 	position: absolute;
-	bottom: 10px;
-	left: 10px;
-	right: 10px;
 	font-size: 13px;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
@@ -47,24 +44,26 @@
 	transition: 0.2s all ease-in-out;
 	-webkit-transition: 0.2s all ease-in-out 0;
 }
-.showcase-info-3{
-	background: rgba(0,0,0,0.6);
-	position: absolute;
+.showcase-info-1{
+	bottom: 10px;
+	left: 10px;
+	right: 10px;
+}
+.showcase-info-2{
 	top:10px;
 	bottom: 10px;
 	left: 10px;
 	right: 10px;
-	font-size: 13px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-	text-align: left;
-	padding: 10px 20px;
-	visibility: hidden;
-	opacity: 0;
-	transition: 0.2s all ease-in-out;
-	-webkit-transition: 0.2s all ease-in-out 0;
+}
+.showcase-info-3{
+	top:10px;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 .meta-info {
 	margin-right: 10px;
@@ -79,16 +78,20 @@
 	text-decoration: none;
 	-webkit-font-smoothing: antialiased;
 }
-.col-md-6{
-	height: 245px;
-	padding: 10px;
+.col-md{
+	padding-left:10px;
+	padding-right:10px;
 }
-
-.col-md-3{
+.flue-1{
+	height: 245px;
+	padding: 10px 0;
+}
+.flue-2{
+	height: 245px;
+	padding: 10px 0;
+}
+.flue-3{
+	padding: 10px 0;
 	height: 122.5px;
-	padding: 10px;
-}
-.col-md-3-2{
-	height: 245px;
-	padding: 10px;
+	position: relative;
 }

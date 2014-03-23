@@ -1,9 +1,11 @@
 var mongodb = require('./db');
 var crypto = require('crypto');
 
-function Post(name, title, post) {
+function Post(name, title,category,categoryaliase, post) {
   this.username = name;
   this.title= title;
+  this.categoryaliase = categoryaliase;
+  this.category = category;
   this.post = post;
 }
 
@@ -25,11 +27,16 @@ Post.prototype.save = function(callback) {//存储一篇文章及其相关信息
   var md5 = crypto.createHash('md5');
   timestamp = md5.update(timestamp).digest('hex');
 
+  var category = {
+    name:this.category,
+    aliase: this.categoryaliase
+  }
   //要存入数据库的文档
   var post = {
       username: this.username,
       time: time,
       title:this.title,
+      category: category,
       post: this.post,
       timestamp: timestamp
   };
@@ -56,9 +63,14 @@ Post.prototype.save = function(callback) {//存储一篇文章及其相关信息
 };
 
 Post.prototype.update = function(timestamp, callback){
+  var category = {
+    name:this.category,
+    aliase: this.categoryaliase
+  }
   var post = {
       username: this.username,
       title:this.title,
+      category:category,
       post: this.post
   };
   mongodb.open(function (err,db){
@@ -86,13 +98,13 @@ Post.get = function(timestamp, callback) {//读取文章及其相关信息
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
-      return callback(err);
+      return callback(err,null);
     }
     //读取 posts 集合
-    db.collection('posts', function(err, collection) {
+    db.collection('posts', function (err, collection) {
       if (err) {
         mongodb.close();
-        return callback(err);
+        return callback(err,null);
       }
       var query = {};
       if (timestamp) {

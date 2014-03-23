@@ -16,6 +16,12 @@ block content
         label 文章标题:
         input(type="text", placeholder="文章标题", name="title", value="#{post.title}").form-control
         br
+        label 文章分类:
+        input(type="text", placeholder="文章分类", name="category", value="#{post.category}").form-control
+        br
+        label 分类别名:
+        input(type="text", placeholder="分类别名", name="categoryaliase").form-control
+        br
         label 文章内容:
         textarea(rows="12", placeholder="文章内容", name="post").form-control #{post.post}
         br
