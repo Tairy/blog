@@ -13,23 +13,23 @@ block content
             if category.display
               li(class="col-md col-md-#{category.liclass}")
                 div(class="showcase-featured-grid-outer flue-#{category.divclass}")
-                  a(style="background-image: url(#{category.color})").showcase-featured-grid-link
+                  a(style="background-image: url(#{category.color})" href="/category/#{category.aliase}").showcase-featured-grid-link
                     span.showcase-featured-grid-inner
                       span.showcase-name
                         span.showcase-name-text #{category.name}
                         span(class="showcase-info showcase-info-#{category.divclass}")
                           span.meta-info
                             span.glyphicon.glyphicon-book
-                            |14
-                            span.text Articles
+                            |&nbsp#{category.count}
+                            span.text &nbspArticles
                 if category.nextdiv
                   div(class="showcase-featured-grid-outer flue-#{category.nextdiv.divclass}")
-                    a(style="background-image: url(#{category.nextdiv.color});").showcase-featured-grid-link
+                    a(style="background-image: url(#{category.nextdiv.color});" href="/category/#{category.nextdiv.aliase}").showcase-featured-grid-link
                       span.showcase-featured-grid-inner
                         span.showcase-name
                           span.showcase-name-text #{category.nextdiv.name}
                           span(class="showcase-info showcase-info-#{category.nextdiv.divclass}")
                             span.meta-info
                               span.glyphicon.glyphicon-book
-                              |14
-                              span.text Articles
+                              |&nbsp#{category.nextdiv.count}
+                              span.text &nbspArticles

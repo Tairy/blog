@@ -28,37 +28,38 @@ module.exports = function(app){
   });
 
   app.get('/contents',function(req,res){
-    Category.get(null, function(err, categorys){
+    Post.getCategory(function(err, categorys){
       if(err){
         categorys= [];
       }
       res.render('contents', { 
         title: "Tairy's Blog-Contents",
-        categorys: categorys
+        categorys: categorys,
+        err:err
       });
     });
   });
 
-  app.get('/category',function(req,res){
-    res.render('category', { 
-      title: "Tairy's Blog-Category",
-      user: req.session.user,
-      success: req.flash('success').toString(),
-      error: req.flash('error').toString()
-    });
-  });
+  // app.get('/category',function(req,res){
+  //   res.render('category', { 
+  //     title: "Tairy's Blog-Category",
+  //     user: req.session.user,
+  //     success: req.flash('success').toString(),
+  //     error: req.flash('error').toString()
+  //   });
+  // });
 
-  app.get('/editcategory/:aliase',function(req,res){
+  app.get('/category/:aliase',function(req,res){
     var aliase = req.params.aliase;
-    Category.get(aliase,function(err,categorys){
+    Post.getCategoriedArticle(aliase,function(err,articles){
       if(err){
-        category = [];
+        articles = [];
       }
 
-      res.render('editcategory', { 
-      title: "Tairy's Blog-EditCategory",
+      res.render('category', { 
+      title: "Tairy's Blog-Category",
       user: req.session.user,
-      categorys: categorys,
+      articles: articles,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
       });
@@ -186,7 +187,7 @@ module.exports = function(app){
   app.post('/edit/:id',function(req,res){
     var currentUser = req.session.user;
     var timestamp = req.params.id;
-    var post = new Post(currentUser.name, req.body.title, req.body.category, req.body.post);
+    var post = new Post(currentUser.name, req.body.title, req.body.category,req.body.categoryaliase, req.body.post);
 
     post.update(timestamp,function(err){
       if(err){

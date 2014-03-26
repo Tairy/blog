@@ -118,8 +118,94 @@ Post.get = function(timestamp, callback) {//读取文章及其相关信息
         if (err) {
           callback(err, null);//失败！返回 null
         }
+        console.log(docs);
         callback(null, docs);//成功！以数组形式返回查询的结果
       });
     });
   });
 };
+
+Post.getCategory = function(callback){
+  mongodb.open(function (err, db){
+    if(err){
+      return callback(err,null);
+    }
+    var liclass = [6,3,3,3,3,3,6,3,3,3,3,6];
+    var divclass = [1,2,3,3,3,3,1,2,2,3,3,1];
+
+    var collection = db.collection('posts');
+    collection.group(
+      {
+       "category.name":1,
+       "category.aliase":1, 
+      },
+      {},
+      {count:0},
+      function(item, summaries){
+        summaries.count++;
+      },
+      true,
+      function(err, results){
+        console.log(results);
+        results.sort(function(a,b){return Math.random()>0.5?1:0});
+        var color = db.collection('color');
+        var array_length = results.length;
+        color.find().limit(array_length).toArray(function (err, doc){
+          mongodb.close();
+          doc.sort(function(a,b){return Math.random()>0.5?1:0});
+          
+          for(key in results){
+            results[key]['liclass'] = liclass[key%12];
+            results[key]['divclass'] = divclass[key%12];
+            results[key]['name'] = results[key]['category.name'];
+            results[key]['aliase'] = results[key]['category.aliase'];
+
+            if(key%12 == 2 || key%12 == 4 || key%12 == 9){
+              results[key]['nextdiv'] = results[Number(key)+1];
+            }else{
+              results[key]['nextdiv'] = null;
+            }
+
+            if(key%12 == 3 || key%12 == 5 || key%12 == 10){
+              results[key]['display'] = false;
+            }else{
+              results[key]['display'] = true;
+            }
+            results[key]['color'] = doc[key]['name'];
+          }
+          if (err) {
+              callback(err, null);
+            }
+            //console.log(results);
+            callback(null, results);
+        });
+      });
+  });
+}
+
+Post.getCategoriedArticle = function(aliase, callback){
+  mongodb.open(function (err, db){
+    if(err){
+      return callback(err,null);
+    }
+    db.collection('posts', function(err, collection) {
+      if(err){
+        mongodb.close();
+        return callback(err,null);
+      }
+      if(aliase){
+        var query = {};
+        query['category.aliase'] = aliase;
+      }
+      collection.find(query).toArray(function (err, docs){
+        docs.sort(function(a,b){return Math.random()>0.5?1:0});  
+        mongodb.close();
+        if(err){
+          callback(err,null);
+        }
+        console.log(docs);
+        callback(null,docs);
+      });
+    });
+  });
+}
