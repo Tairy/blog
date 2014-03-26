@@ -4,9 +4,9 @@
  */
 
 var crypto = require('crypto'),
-User = require('../models/user.js');
-Post = require('../models/post.js');
-Category = require('../models/category.js')
+    User = require('../models/user.js'),
+    Post = require('../models/post.js'),
+    Color = require('../models/color.js');
 
 var md = require('marked');
 
@@ -39,16 +39,6 @@ module.exports = function(app){
       });
     });
   });
-
-  // app.get('/category',function(req,res){
-  //   res.render('category', { 
-  //     title: "Tairy's Blog-Category",
-  //     user: req.session.user,
-  //     success: req.flash('success').toString(),
-  //     error: req.flash('error').toString()
-  //   });
-  // });
-
   app.get('/category/:aliase',function(req,res){
     var aliase = req.params.aliase;
     Post.getCategoriedArticle(aliase,function(err,articles){
@@ -66,16 +56,10 @@ module.exports = function(app){
     });
   });
 
-  app.post('/editcategory/:aliase',function(req,res){
-    var category = new Category(req.body.name, req.body.aliase, req.body.color);
-    var aliase = req.params.aliase;
-    category.update(aliase,function(err){
-      if(err){
-        req.flash('error', err);
-        return res.redirect('/');
-      }
-      req.flash('success', '更新成功!');
-      res.redirect('/contents');
+  app.get('/addcolor',function(req,res){
+    res.render('addcolor', { 
+      title: "Tairy's Blog-Addcolor",
+      user: req.session.user,
     });
   });
 
@@ -140,6 +124,18 @@ module.exports = function(app){
       user: req.session.user,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
+    });
+  });
+
+  app.post('/addcolor',function(req,res){
+    var color = new Color(req.body.name);
+    color.save(function(err){
+      if(err){
+        req.flash('error', err);
+        return res.redirect('/');
+      }
+      req.flash('success', '添加成功!');
+      res.redirect('/');
     });
   });
 
