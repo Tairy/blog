@@ -118,7 +118,6 @@ Post.get = function(timestamp, callback) {//读取文章及其相关信息
         if (err) {
           callback(err, null);//失败！返回 null
         }
-        console.log(docs);
         callback(null, docs);//成功！以数组形式返回查询的结果
       });
     });
@@ -146,7 +145,6 @@ Post.getCategory = function(callback){
       },
       true,
       function(err, results){
-        console.log(results);
         results.sort(function(a,b){return Math.random()>0.5?1:0});
         var color = db.collection('color');
         var array_length = results.length;
@@ -174,10 +172,9 @@ Post.getCategory = function(callback){
             results[key]['color'] = doc[key]['name'];
           }
           if (err) {
-              callback(err, null);
-            }
-            //console.log(results);
-            callback(null, results);
+            callback(err, null);
+          }
+          callback(null, results);
         });
       });
   });
@@ -203,7 +200,6 @@ Post.getCategoriedArticle = function(aliase, callback){
         if(err){
           callback(err,null);
         }
-        console.log(docs);
         callback(null,docs);
       });
     });

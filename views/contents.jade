@@ -20,8 +20,8 @@ block content
                         span(class="showcase-info showcase-info-#{category.divclass}")
                           span.meta-info
                             span.glyphicon.glyphicon-book
-                            |&nbsp#{category.count}
-                            span.text &nbspArticles
+                            |&nbsp;#{category.count}
+                            span.text &nbsp;Articles
                 if category.nextdiv
                   div(class="showcase-featured-grid-outer flue-#{category.nextdiv.divclass}")
                     a(style="background-image: url(#{category.nextdiv.color});" href="/category/#{category.nextdiv.aliase}").showcase-featured-grid-link
@@ -31,5 +31,7 @@ block content
                           span(class="showcase-info showcase-info-#{category.nextdiv.divclass}")
                             span.meta-info
                               span.glyphicon.glyphicon-book
-                              |&nbsp#{category.nextdiv.count}
-                              span.text &nbspArticles
+                              |&nbsp;#{category.nextdiv.count}
+                              span.text &nbsp;Articles
+  hr
+  canvas(width="400" height="400")#myChart
